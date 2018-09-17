@@ -1,10 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 project(slam_karto)
 
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 11)
-endif()
-
 find_package(catkin REQUIRED
   COMPONENTS
     cmake_modules
@@ -17,6 +13,7 @@ find_package(catkin REQUIRED
     sparse_bundle_adjustment
     tf
     visualization_msgs
+    rosbag
 )
 find_package(Eigen REQUIRED)
 
@@ -31,3 +28,6 @@ target_link_libraries(slam_karto ${catkin_LIBRARIES})
 install(TARGETS slam_karto
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
+add_executable(slam_karto_offline src/slam_karto_offline.cpp src/spa_solver.cpp)
+target_link_libraries(slam_karto_offline ${catkin_LIBRARIES})
